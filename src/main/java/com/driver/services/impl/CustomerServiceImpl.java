@@ -75,6 +75,7 @@ public class CustomerServiceImpl implements CustomerService {
 		driverRepository2.save(driver);
 		customerRepository2.save(customer);
 
+		tripBookingRepository2.save(tripBooking);
 		return tripBooking;
 	}
 
@@ -83,13 +84,14 @@ public class CustomerServiceImpl implements CustomerService {
 		//Cancel the trip having given trip Id and update TripBooking attributes accordingly
 		TripBooking tripBooking=tripBookingRepository2.findById(tripId).get();
 		tripBooking.setStatus(TripStatus.CANCELED);
+		tripBooking.setBill(0);
 
 		Driver driver=tripBooking.getDriver();
 		Cab cab=driver.getCab();
 		cab.setAvailable(true);
 		driverRepository2.save(driver);
 
-//		tripBookingRepository2.save(tripBooking);
+		tripBookingRepository2.save(tripBooking);
 	}
 
 	@Override
@@ -107,5 +109,7 @@ public class CustomerServiceImpl implements CustomerService {
 		tripBooking.setBill(bill);
 
 		driverRepository2.save(driver);
+
+		tripBookingRepository2.save(tripBooking);
 	}
 }
